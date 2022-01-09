@@ -1,0 +1,42 @@
+Setup local tooling:
+Make directory
+npm init -y
+npm install --save-dev hardhat
+
+Get sample project working:
+npx hardhat
+npm install --save-dev "hardhat@^2.8.0" "@nomiclabs/hardhat-waffle@^2.0.0" "ethereum-waffle@^3.0.0" "chai@^4.2.0" "@nomiclabs/hardhat-ethers@^2.0.0" "ethers@^5.0.0"
+npm install @openzeppelin/contracts
+npx hardhat run scripts/sample-script.js
+Output: Screenshot 2021-12-31 173601
+
+Write our starter contract:
+Delete the file sample-test.js under test.  Also, delete sample-script.js under scripts. Then, delete Greeter.sol under contracts. Don't delete the actual folders!
+Create your contract (a file name.sol) under the contracts directory
+Go into the scripts directory and make a file named run.js. This is what run.js is going to have inside it:
+
+	const main = async () => {
+  	const nftContractFactory = await hre.ethers.getContractFactory('MyEpicNFT');
+  	const nftContract = await nftContractFactory.deploy();
+  	await nftContract.deployed();
+  	console.log("Contract deployed to:", nftContract.address);
+	};
+
+	const runMain = async () => {
+  	try {
+    	await main();
+    	process.exit(0);
+  	} catch (error) {
+    	console.log(error);
+    	process.exit(1);
+  	}
+	};
+
+	runMain();
+
+Before you run this, be sure to change solidity: "0.8.4", to solidity: "0.8.0", in your hardhat.config.js
+npx hardhat run scripts/run.js
+Output: Screenshot 2021-12-31 175258
+
+
+
